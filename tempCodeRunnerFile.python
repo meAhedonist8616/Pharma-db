@@ -1,0 +1,52 @@
+def open_admin_dashboard():
+    admin_window = tk.Toplevel()
+    admin_window.title("Admin Dashboard")
+    admin_window.attributes('-fullscreen', True)  # Open in full screen
+
+    # Set a background color
+    admin_window.configure(bg="#ecf0f1")  # Light grey background color
+
+    tk.Label(admin_window, text="Welcome to the Admin Dashboard!", font=("Arial", 28, "bold"), bg="#ecf0f1", fg="#34495e").pack(pady=30)
+
+    # Create a frame for buttons for better organization
+    button_frame = tk.Frame(admin_window, bg="#ecf0f1")
+    button_frame.pack(expand=True)
+
+    # Button style dictionary
+    button_style = {
+        'font': ("Arial", 18),
+        'bg': "#3498db",  # Blue background for buttons
+        'fg': "white",
+        'width': 25,
+        'padx': 10,
+        'pady': 15
+    }
+
+    # Function to change button color on hover
+    def on_enter(event):
+        event.widget['bg'] = '#2980b9'  # Darker blue on hover
+
+    def on_leave(event):
+        event.widget['bg'] = '#3498db'  # Original blue when not hovered
+
+    # Create buttons with hover effect and add them to the frame using grid layout
+    button_texts = [
+        ("Manage Medicines", manage_medicines),
+        ("Manage Customers", manage_customers),
+        ("Manage Sales", manage_sales),
+        ("Manage Suppliers", manage_suppliers),
+        ("Manage Employees", manage_employees),
+        ("Logout", admin_window.destroy)
+    ]
+
+    for i, (text, command) in enumerate(button_texts):
+        button = tk.Button(button_frame, text=text, command=command, **button_style)
+        button.grid(row=i, column=0, padx=20, pady=10, sticky='ew')  # Use sticky to fill the cell
+        button.bind("<Enter>", on_enter)
+        button.bind("<Leave>", on_leave)
+
+    # Set the button frame to expand and fill the space
+    button_frame.columnconfigure(0, weight=1)  # Allow the button column to expand
+    button_frame.pack_propagate(False)  # Prevent the frame from resizing to fit the buttons
+    button_frame.config(height=400, width=500)  # Set a fixed size for the button frame
+  
